@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Cart{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center">Your Cart</h1>
+    <div class="cart-items">
+        {% for item in cart_items %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h2 class="card-title">{{ item.product.name }}</h2>
+                <p class="card-text">Quantity: {{ item.quantity }}</p>
+                <p class="card-text">Price: ${{ item.product.price }}</p>
+                <p class="card-text">Total: ${{ item.total_price }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <h3 class="text-right">Total Amount: ${{ total_amount }}</h3>
+
+    <form method="post" action="{% url 'place_order' %}">
+        {% csrf_token %}
+        <div class="text-right">
+            <button type="submit" class="btn btn-primary">Place Order</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

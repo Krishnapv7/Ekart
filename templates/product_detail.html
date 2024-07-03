@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ object.name }} - E-Kart{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title">{{ object.name }}</h1>
+                <p class="card-text">Category: {{ object.category }}</p>
+                <p class="card-text">Description: {{ object.description }}</p>
+                <p class="card-text">Price: ${{ object.price }}</p>
+                <form action="{% url 'add_to_cart' %}" method="POST" class="form-inline">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{ object.pk }}">
+                    <div class="form-group">
+                        <label for="quantity">Quantity:</label>
+                        <input type="number" id="quantity" name="quantity" class="form-control mx-2" min="1" value="1">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add to Cart</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Categories{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center">Categories</h1>
+    <div class="list-group">
+        {% for category in categories %}
+        <div class="list-group-item">
+            <h2>{{ category.name }}</h2>
+            <ul class="list-group">
+                {% for product in category.products.all %}
+                <li class="list-group-item">
+                    <a href="{% url 'product_detail' pk=product.pk %}">{{ product.name }}</a>
+                    <p>Description: {{ product.description }}</p>
+                    <p>Price: ${{ product.price }}</p>
+                </li>
+                {% empty %}
+                <li class="list-group-item">No products in this category.</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% empty %}
+        <div class="list-group-item">No categories found.</div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
